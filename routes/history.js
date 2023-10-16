@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
                 console.error('Error connecting: ' + err.stack);
                 return;
             }
-        console.log('Connected to DB');
+        // console.log('Connected to DB');
 
         const query = "select dcr.DOCUMENT_ID, dcr.DECISION, dcr.DECISION_DATE, d.NAME, dcr.REQUEST_ID, dcr.CHANGE_REASON from DOCM_CHNG_RQST dcr inner join DOCUMENTS d on dcr.DOCUMENT_ID = d.DOCUMENT_ID where dcr.DOCUMENT_ID = 'CI-QSP-7150'";
         connection.query(query, (err, rows, fields) => {

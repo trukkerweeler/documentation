@@ -35,8 +35,9 @@ function getRecords () {
                 const tr = document.createElement('tr');
                 for (let key in record) {
                     const td = document.createElement('td');
-                    switch (key) {
-                        case 'ISSUE_DATE':
+                    let lastFour = key.slice(-4);
+                    switch (lastFour) {
+                        case 'DATE':
                             td.textContent = record[key].slice(0,10);
                             break;
                         default:

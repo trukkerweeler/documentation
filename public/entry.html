@@ -26,18 +26,20 @@
             <label for="doc_rev">Revision</label>
             <input type="text" name="doc_rev" id="doc_rev" placeholder="Enter revision">
             <label for="status">Status</label>
-            <input type="text" name="status" id="status" placeholder="Enter status">
+            <select name="status" id="status">
+                <option value="C" selected>Current</option>
+                <option value="O">Obsolete</option>
+                <option value="P">Pending</option>
+            </select> 
             <label for="subject">Subject</label>
             <input type="text" name="subject" id="subject" placeholder="Enter subject">
             <label for="reference">Reference</label>
-            <input type="text" name="reference" id="reference" placeholder="Enter reference">             
+            <input type="text" name="reference" id="reference" placeholder="Enter reference including preceding zero">             
             
             <input type="submit" value="Submit" id="button">
         </form>
     </main>
-    <footer id="footer">
-        <p>CI Documentation System</p>
-    </footer>
+    <footer id="footer"></footer>
     
 </body>
 <script type="module" src="/js/sysdoc.js"></script>

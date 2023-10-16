@@ -22,9 +22,9 @@ router.get('/', (req, res) => {
                 console.error('Error connecting: ' + err.stack);
                 return;
             }
-        console.log('Connected to DB');
+        // console.log('Connected to DB');
 
-        const query = 'select DOCUMENT_ID, NAME, TYPE, STATUS, REVISION_LEVEL, ISSUE_DATE, CREATE_BY, CREATE_DATE from DOCUMENTS order by REFERENCE';
+        const query = 'select DOCUMENT_ID, NAME, TYPE, STATUS, REVISION_LEVEL, ISSUE_DATE, REFERENCE, CREATE_BY, CREATE_DATE from DOCUMENTS order by REFERENCE asc, TYPE desc, DOCUMENT_ID asc';
         connection.query(query, (err, rows, fields) => {
             if (err) {
                 console.log('Failed to query for corrective actions: ' + err);
@@ -37,8 +37,6 @@ router.get('/', (req, res) => {
         connection.end();
         });
     
-
-    // res.send('Hello Corrective!');
     } catch (err) {
         console.log('Error connecting to Db');
         return;
@@ -64,7 +62,7 @@ router.post('/', (req, res) => {
                 console.error('Error connecting: ' + err.stack);
                 return;
             }
-        console.log('Connected to DB');
+        // console.log('Connected to DB');
 
         const query = 'insert into DOCUMENTS (DOCUMENT_ID, NAME, TYPE, SUBJECT, REFERENCE, STATUS, REVISION_LEVEL, ISSUE_DATE, CHECKED_OUT, AUDIT_RESPONSIBLE, CREATE_BY, CREATE_DATE) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 

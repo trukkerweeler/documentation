@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
                 console.error('Error connecting: ' + err.stack);
                 return;
             }
-        console.log('Connected to DB');
+        // console.log('Connected to DB');
 
         const query = 'select DOCUMENT_ID, REQUEST_ID, CHANGE_REASON, REQUEST_DATE, ASSIGNED_TO, CLOSED from DOCM_CHNG_RQST order by CLOSED, REQUEST_ID desc';
         // const query = 'select * from DOCM_CHNG_RQST';
@@ -136,7 +136,7 @@ router.post('/', (req, res) => {
 
 });
 
-// Get the next ID for a new expiry record
+// Get the next ID for a new dcr record
 router.get('/nextId', (req, res) => {
     // res.json('0000005');
     try {
