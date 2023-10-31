@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
         const query = 'select DOCUMENT_ID, NAME, TYPE, STATUS, REVISION_LEVEL, ISSUE_DATE, REFERENCE, CREATE_BY, CREATE_DATE from DOCUMENTS order by REFERENCE asc, TYPE desc, DOCUMENT_ID asc';
         connection.query(query, (err, rows, fields) => {
             if (err) {
-                console.log('Failed to query for corrective actions: ' + err);
+                console.log('Failed to query for document selection: ' + err);
                 res.sendStatus(500);
                 return;
             }
@@ -68,7 +68,7 @@ router.post('/', (req, res) => {
 
         connection.query(query, [req.body.document_id, req.body.document_name, req.body.DOCUMENT_TYPE, req.body.document_name, req.body.reference, req.body.status, req.body.doc_rev, req.body.issue_date, req.body.CHECKED_OUT, req.body.AUDIT_RESPONSIBLE, req.body.CREATE_BY, req.body.CREATE_DATE], (err, rows, fields) => {
             if (err) {
-                console.log('Failed to query for corrective actions: ' + err);
+                console.log('Failed to query for new document: ' + err);
                 res.sendStatus(500)
                 return;
             }

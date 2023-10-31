@@ -1,8 +1,7 @@
 // ==================================================
 // DOCUMENT HISTORY ROUTER
 
-const url = 'http://localhost:3000/history';
-
+// Require express
 require('dotenv').config();
 // sequelize...
 
@@ -11,39 +10,43 @@ const router = express.Router();
 const mysql = require('mysql');
 
 
-// ==================================================
-// Get all records
-router.get('/', (req, res) => {
+// get records
+router.get('/:id', (req, res) => {
     try {
-        const connection = mysql.createConnection({
+        const db = mysql.createConnection({
             host: process.env.DB_HOST,
             user: process.env.DB_USER,
             password: process.env.DB_PASS,
-            port: 3306,
-            database: 'quality'
+            port: process.env.DB_PORT,
+            database : 'quality'
         });
-        connection.connect(function(err) {
+
+        db.connect(function(err) {
             if (err) {
                 console.error('Error connecting: ' + err.stack);
                 return;
             }
-        // console.log('Connected to DB');
-
-        const query = "select dcr.DOCUMENT_ID, dcr.DECISION, dcr.DECISION_DATE, d.NAME, dcr.REQUEST_ID, dcr.CHANGE_REASON from DOCM_CHNG_RQST dcr inner join DOCUMENTS d on dcr.DOCUMENT_ID = d.DOCUMENT_ID where dcr.DOCUMENT_ID = 'CI-QSP-7150'";
-        connection.query(query, (err, rows, fields) => {
+            
+        let did = '';
+        did = req.params.id;
+        // console.log(did);
+        const query = `select dcr.*, dcrt.REQUEST_TEXT from DOCM_CHNG_RQST dcr left join DOC_CHG_REQ_TXT dcrt on dcr.REQUEST_ID = dcrt.REQUEST_ID where dcr.DOCUMENT_ID = '${req.params.id}'`;
+        // console.log(query);
+        
+        db.query(query, (err, rows, fields) => {
             if (err) {
-                console.log('Failed to query for DOCM_CHNG_RQST: ' + err);
+                console.log('Failed to query for document history: ' + err);
                 res.sendStatus(500);
                 return;
             }
             res.json(rows);
         });
 
-        connection.end();
+        db.end();
         });
     
     } catch (err) {
-        console.log('Error connecting to Db history 44');
+        console.log('Error connecting to Db');
         return;
     }
 

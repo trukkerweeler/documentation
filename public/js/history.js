@@ -1,63 +1,49 @@
 import { loadHeaderFooter } from "./utils.mjs";
 loadHeaderFooter();
 
+const button = document.querySelector('#changedetailsearch');
+button.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('did')
+    const did = id.value;
+    const url = 'http://localhost:3000/history/' + did;
+    // console.log(url);
 
-const url = 'http://localhost:3000/history';
+    // Delete the child nodes of the main element
+    while (main.firstChild) {
+        main.removeChild(main.firstChild);
+    }
 
-// get the current year
-const year = new Date().getFullYear();
-// document.querySelector('#year').textContent = year;
-
-
-function getRecords () {
-    const main = document.querySelector('main');
-    
-    fetch(url, { method: 'GET' })
+    fetch (url, {method: 'GET'})
 
     .then(response => response.json())
-    .then(records => {
-        // console.log(records);
+    .then(data => {
+        // console.log(data);
+        let output = '<tr><th>Request ID</th><th>Request Date</th><th>Change Reason</th><th>Request Text</th><th>Closed Date</th></tr>';
+        data.forEach(function (doc) {
+            // print each field name and value
+            for (let key in doc) {
+                // if the last 4 of the key are _DATE, then slice the value to only show the date
+                if (key.slice(-4) == 'DATE' && doc[key] != null) {
+                    doc[key] = doc[key].slice(0, 10);
+                } 
+            }
+
+            output += `
+            <tr>
+                <td>${doc.REQUEST_ID}</td>
+                <td>${doc.REQUEST_DATE}</td>
+                <td>${doc.CHANGE_REASON}</td>
+                <td>${doc.REQUEST_TEXT}</td>
+                <td>${doc.CLOSED_DATE}</td>
+            </tr>
+            `;
+        });
+        // document.getElementById('output').innerHTML = output;
+        // document.getElementById('main').innerHTML = output;
+        const main = document.querySelector('#main');
         const table = document.createElement('table');
-            const thead = document.createElement('thead');
-            const tbody = document.createElement('tbody');
-            const header = document.createElement('tr');
-            const td = document.createElement('td');
-            // const fieldList = ['DOCUMENT_ID', 'NAME', 'TYPE', 'STATUS', 'REVISION_LEVEL', 'ISSUE_DATE', 'SUBJECT', 'CREATE_BY', 'CREATE_DATE'];
-            for (let key in records[0]) {
-                // if (fieldList.includes(key)){
-                const th = document.createElement('th');
-                th.textContent = key;
-                header.appendChild(th);
-                // }
-            }
-            thead.appendChild(header);
-
-            for (let record of records) {
-                const tr = document.createElement('tr');
-                for (let key in record) {
-                    const td = document.createElement('td');
-                    const isDate = key.includes('DATE');
-                    switch (isDate) {
-                        case true:
-                            if (record[key] === null) {
-                                td.textContent = '';
-                            } else {
-                                td.textContent = record[key].slice(0,10);
-                            }                            
-                            break;
-                        default:
-                            td.textContent = record[key];
-                    // tr.appendChild(td);
-                }
-                tr.appendChild(td);
-            }
-                tbody.appendChild(tr);
-            }
-
-            table.appendChild(thead);
-            table.appendChild(tbody);
-            main.appendChild(table);
+        table.innerHTML = output;
+        main.appendChild(table);
     })
-}
-
-getRecords();
+});

@@ -1,6 +1,7 @@
 import { loadHeaderFooter } from "./utils.mjs";
 loadHeaderFooter();
 const url = 'http://localhost:3000/sysdocs';
+const url2 = 'http://localhost:3000/docsavail';
 
 // Send POST request to server
 const form = document.querySelector('form');
@@ -47,6 +48,21 @@ form.addEventListener('submit', async (event) => {
         catch (err) {
             console.log('Error:', err);
         }
+    
+    try {
+        await fetch(url2, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(dataJson)
+        });
+        console.log('Success:', JSON.stringify(dataJson));
+        }
+        catch (err) {
+            console.log('Error:', err);
+        }
+    
 
     form.reset();
 });

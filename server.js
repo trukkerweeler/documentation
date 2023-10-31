@@ -25,6 +25,9 @@ app.use("/requests", requestRoutes);
 const historyRoutes = require("./routes/history");
 app.use("/history", historyRoutes);
 
+const docsavailRoutes = require("./routes/docsavail");
+app.use("/docsavail", docsavailRoutes);
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
