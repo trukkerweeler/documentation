@@ -9,24 +9,22 @@
     <link  rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abel&family=Tapestry&display=swap">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="images/ci-logo.png">
-    <title>Documentation - Add</title>
+    <title>TEST > TEST >TEST</title>
 </head>
 <body>
     <header id="header">        
     </header>
-    <h1>Add Document</h1>
-    <main id="main">
-        <!-- <button onclick="document.querySelector('.inputFile').click();">Choose Control File</button>
-        <input class="inputFile" type="file" style="display: none;"> -->
+    <h1>TEST > TEST >TEST</h1>
+    <main id="main" class="test">
         <form action="submit" name="entryform" id="entryform">
             <label for="document_id">Document ID</label>
-            <input type="document_id" name="document_id" id="document_id" placeholder="Enter document id">
+            <input type="document_id" name="document_id" id="document_id" placeholder="Enter document id" value="TEST">
             <label for="document_name">Document Name</label>
-            <input type="text" name="document_name" id="document_name" placeholder="Enter document name">
+            <input type="text" name="document_name" id="document_name" placeholder="Enter document name" value="Test Document">
             <label for="issue_date">Issue Date</label>
             <input type="date" name="issue_date" id="issue_date" placeholder="Enter issue date">
             <label for="doc_rev">Revision</label>
-            <input type="text" name="doc_rev" id="doc_rev" placeholder="Enter revision">
+            <input type="text" name="doc_rev" id="doc_rev" placeholder="Enter revision" value="99">
             <label for="status">Status</label>
             <select name="status" id="status">
                 <option value="C" selected>Current</option>
@@ -34,15 +32,20 @@
                 <option value="P">Pending</option>
             </select> 
             <label for="subject">Subject</label>
-            <input type="text" name="subject" id="subject" placeholder="Enter subject">
+            <input type="text" name="subject" id="subject" placeholder="Enter subject" value="TEST">
             <label for="reference">Reference</label>
-            <input type="text" name="reference" id="reference" placeholder="Enter reference including preceding zero">
+            <input type="text" name="reference" id="reference" placeholder="Enter reference including preceding zero" value="07500">              
             
+            <button onclick="document.querySelector('.inputFile').click();">Choose Control File</button>
+            <input class="inputFile" type="file" style="display: none;">   
+                       
+            
+            <p></p>
             <input type="submit" value="Submit" id="button">
         </form>
     </main>
     <footer id="footer"></footer>
     
 </body>
-<script type="module" src="/js/sysdoc.js"></script>
+<script type="module" src="/js/test.js"></script>
 </html>
