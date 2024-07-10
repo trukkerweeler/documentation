@@ -65,8 +65,8 @@ router.post('/', (req, res) => {
         // console.log('Connected to DB');
 
         const query = 'insert into DOCUMENTS (DOCUMENT_ID, NAME, TYPE, SUBJECT, REFERENCE, STATUS, REVISION_LEVEL, ISSUE_DATE, CHECKED_OUT, AUDIT_RESPONSIBLE, CREATE_BY, CREATE_DATE) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-
-        connection.query(query, [req.body.document_id, req.body.document_name, req.body.DOCUMENT_TYPE, req.body.document_name, req.body.reference, req.body.status, req.body.doc_rev, req.body.issue_date, req.body.CHECKED_OUT, req.body.AUDIT_RESPONSIBLE, req.body.CREATE_BY, req.body.CREATE_DATE], (err, rows, fields) => {
+        let document_id = req.body.document_id.toUpperCase();
+        connection.query(query, [document_id, req.body.document_name, req.body.DOCUMENT_TYPE, req.body.document_name, req.body.reference, req.body.status, req.body.doc_rev, req.body.issue_date, req.body.CHECKED_OUT, req.body.AUDIT_RESPONSIBLE, req.body.CREATE_BY, req.body.CREATE_DATE], (err, rows, fields) => {
             if (err) {
                 console.log('Failed to query for new document: ' + err);
                 res.sendStatus(500)

@@ -24,7 +24,7 @@ form.addEventListener('submit', async (event) => {
         CREATE_BY: 'TKENT',
         AUDIT_RESPONSIBLE: 'I',
         CHECKED_OUT: 'N',
-        CTRL_DOC: ctrlpath,
+        // CTRL_DOC: ctrlpath,
     };
     for (let field of data.keys()) {
         console.log(field);
@@ -39,34 +39,34 @@ form.addEventListener('submit', async (event) => {
     }
     console.log(dataJson);
 
-    // try {
-    //     await fetch(url, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //             },
-    //         body: JSON.stringify(dataJson)
-    //     });
-    //     console.log('Success:', JSON.stringify(dataJson));
-    //     }
-    //     catch (err) {
-    //         console.log('Error:', err);
-    //     }
+    try {
+        await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(dataJson)
+        });
+        console.log('Success:', JSON.stringify(dataJson));
+        }
+        catch (err) {
+            console.log('Error:', err);
+        }
     
-    // try {
-    //     await fetch(url2, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //             },
-    //         body: JSON.stringify(dataJson)
-    //     });
-    //     console.log('Success:', JSON.stringify(dataJson));
-    //     }
-    //     catch (err) {
-    //         console.log('Error:', err);
-    //     }
+    try {
+        await fetch(url2, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(dataJson)
+        });
+        console.log('Success:', JSON.stringify(dataJson));
+        }
+        catch (err) {
+            console.log('Error:', err);
+        }
     
 
-    // form.reset();
+    form.reset();
 });

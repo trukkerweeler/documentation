@@ -67,11 +67,11 @@ router.post('/', (req, res) => {
         console.log('Connected to DB');
 
         const date_due = new Date(req.body.DUE_DATE);
+        // convert ASSIGNED_TO to uppercase
+        req.body.ASSIGNED_TO = req.body.ASSIGNED_TO.toUpperCase();
+        // convert DOCUMENT_ID to uppercase
+        req.body.DOCUMENT_ID = req.body.DOCUMENT_ID.toUpperCase();
         // convert to MySQL date format
-        
-        
-        
-        
         date_due.setDate(date_due.getDate() + 30);
         console.log(date_due.toLocaleDateString());
         date_due.toLocaleDateString();
