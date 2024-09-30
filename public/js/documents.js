@@ -43,6 +43,9 @@ function getRecords () {
                         default:
                             td.textContent = record[key];
                     // tr.appendChild(td);
+                    if (key === 'DOCUMENT_ID') {
+                        td.innerHTML = `<a href="document.html?document_id=${record[key]}">${record[key]}</a>`;
+                    }
                 }
                 tr.appendChild(td);
             }

@@ -145,10 +145,6 @@ form {
 }
 
 #main-nav ul{
-    /* position: relative; */
-    /* overflow: hidden; */
-    /* display: grid;
-    grid-template-columns: 1fr 1fr 1fr; */
     display: flex;
     background-color: var(--primary-color);
     color: var(--text-color-light);
@@ -212,4 +208,27 @@ li:hover ul .submenu {
     opacity: 1;
     top: 25px;
     visibility: visible;
+}
+
+#docsSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 2rem auto;
+}
+
+#detailTitle {
+    grid-column: 1 / 3;
+}
+
+#detailButtons {
+    /* grid-column: 3 / 4; */
+    justify-self: end;
+    align-self: center;
+
+}
+
+.docdata {
+    grid-column: 1/4;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }

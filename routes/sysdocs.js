@@ -46,6 +46,41 @@ router.get('/', (req, res) => {
 
 // ==================================================
 // Get a single record
+router.get('/:id', (req, res) => {
+    try {
+        const connection = mysql.createConnection({
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASS,
+            port: 3306,
+            database: 'quality'
+        });
+        connection.connect(function(err) {
+            if (err) {
+                console.error('Error connecting: ' + err.stack);
+                return;
+            }
+        // console.log('Connected to DB');
+
+        const query = 'select * from DOCUMENTS where DOCUMENT_ID = ?';
+        connection.query(query, [req.params.id], (err, rows, fields) => {
+            if (err) {
+                console.log('Failed to query for document: ' + err);
+                res.sendStatus(500);
+                return;
+            }
+            res.json(rows);
+        });
+
+        connection.end();
+        });
+
+    } catch (err) {
+        console.log('Error connecting to Db');
+        return;
+    }
+
+});
 
 // post new doc
 router.post('/', (req, res) => {
