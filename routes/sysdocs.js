@@ -62,7 +62,7 @@ router.get('/:id', (req, res) => {
             }
         // console.log('Connected to DB');
 
-        const query = 'select * from DOCUMENTS where DOCUMENT_ID = ?';
+        const query = 'select d.*, da.CTRL_DOC, da.DIST_DOC from DOCUMENTS d left join DOCS_AVAIL da on d.DOCUMENT_ID = da.DOCUMENT_ID where d.DOCUMENT_ID = ?';
         connection.query(query, [req.params.id], (err, rows, fields) => {
             if (err) {
                 console.log('Failed to query for document: ' + err);
@@ -108,6 +108,53 @@ router.post('/', (req, res) => {
                 return;
             }
             res.json(rows);
+        });
+
+        connection.end();
+        });
+
+    } catch (err) {
+        console.log('Error connecting to Db');
+        return;
+    }
+
+});
+
+// update doc
+router.put('/:id', (req, res) => {
+    try {
+        const connection = mysql.createConnection({
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASS,
+            port: 3306,
+            database: 'quality'
+        });
+        connection.connect(function(err) {
+            if (err) {
+                console.error('Error connecting: ' + err.stack);
+                return;
+            }
+        // console.log('Connected to DB');
+        
+        const query = 'update DOCUMENTS set NAME = ?, TYPE = ?, SUBJECT = ?, STATUS = ?, REVISION_LEVEL = ?, ISSUE_DATE = ?, MODIFIED_BY = ?, MODIFIED_DATE = ? where DOCUMENT_ID = ?';
+        connection.query(query, [req.body.NAME, req.body.TYPE.toUpperCase(), req.body.SUBJECT.toUpperCase(), req.body.STATUS.toUpperCase(), req.body.REVISION_LEVEL, req.body.ISSUE_DATE, req.params.MODIFIED_BY, req.params.MODIFIED_DATE, req.params.id], (err, rows, fields) => {
+            if (err) {
+                console.log('Failed to query for document update: ' + err);
+                res.sendStatus(500)
+                return;
+            }
+            res.json(rows);
+        });
+
+        const query2 = 'update DOCS_AVAIL set CTRL_DOC = ?, DIST_DOC = ? where DOCUMENT_ID = ?';
+        connection.query(query2, [req.body.CTRL_DOC, req.body.DIST_DOC, req.params.id], (err, rows, fields) => {
+            if (err) {
+                console.log('Failed to query for document avail update: ' + err);
+                res.sendStatus(500)
+                return;
+            }
+            // res.json(rows);
         });
 
         connection.end();

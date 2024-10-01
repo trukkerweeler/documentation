@@ -1,7 +1,9 @@
-import { loadHeaderFooter, getDocType } from "./utils.mjs";
+import { loadHeaderFooter, getDocType, getUserValue } from "./utils.mjs";
 loadHeaderFooter();
 const url = 'http://localhost:3000/sysdocs';
 const url2 = 'http://localhost:3000/docsavail';
+
+const user = getUserValue();
 
 // Send POST request to server
 const form = document.querySelector('form');
@@ -21,7 +23,7 @@ form.addEventListener('submit', async (event) => {
 
     const dataJson = {
         CREATE_DATE: createDate,
-        CREATE_BY: 'TKENT',
+        CREATE_BY: user,
         AUDIT_RESPONSIBLE: 'I',
         CHECKED_OUT: 'N',
         // CTRL_DOC: ctrlpath,

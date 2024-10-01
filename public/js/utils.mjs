@@ -33,3 +33,10 @@ export function getDocType(docid) {
   }
   return proposedDocType;
 }
+
+  // get user value from config.json file
+  export async function getUserValue() {
+    const res = await fetch("../js/config.json");
+    const data = await res.json();
+    return data.user;
+  }

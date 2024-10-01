@@ -1,6 +1,6 @@
-import { loadHeaderFooter } from './utils.mjs';
+import { loadHeaderFooter, getUserValue } from './utils.mjs';
 loadHeaderFooter();
-// const user = await getUserValue();
+const user = await getUserValue();
 const test = true
 
 // Get the project id from the url params
@@ -28,7 +28,7 @@ while (main.firstChild) {
     fetch(url, { method: 'GET' })
     .then(response => response.json())
     .then(record => {
-        // console.log(record);
+        console.log(record);
         for (const key in record) {
             const detailSection = document.createElement('section');
             detailSection.setAttribute('class', 'section');
@@ -65,7 +65,7 @@ while (main.firstChild) {
             divDetailBtns.appendChild(btnEditDoc);            
             detailSection.appendChild(divDetailBtns);
             
-            const fieldList = ['DOCUMENT_ID', 'NAME', 'TYPE', 'STATUS', 'REVISION_LEVEL', 'ISSUE_DATE', 'SUBJECT'];
+            const fieldList = ['DOCUMENT_ID', 'NAME', 'TYPE', 'STATUS', 'REVISION_LEVEL', 'ISSUE_DATE', 'SUBJECT', 'CTRL_DOC', 'DIST_DOC'];
             for (const key in record[0]) {
                 if (fieldList.includes(key)){
                     const p = document.createElement('p');
@@ -85,11 +85,11 @@ while (main.firstChild) {
                 }
             }
 
-            // if (user === 'TKENT') {
-            //     btnClose.disabled = false;
-            // } else {
-            //     btnClose.disabled = true;
-            // }
+            if (user === 'TKENT') {
+                btnClose.disabled = false;
+            } else {
+                btnClose.disabled = true;
+            }
 
             
             // detailSection.appendChild(detailTable);
@@ -147,7 +147,7 @@ while (main.firstChild) {
 
         for (const key in record) {
             for (const field in record[key]) {
-                 if (['DOCUMENT_ID', 'NAME', 'TYPE', 'STATUS', 'REVISION_LEVEL', 'ISSUE_DATE', 'SUBJECT'].includes (field)) {
+                 if (['DOCUMENT_ID', 'NAME', 'TYPE', 'STATUS', 'REVISION_LEVEL', 'ISSUE_DATE', 'SUBJECT', 'CTRL_DOC', 'DIST_DOC'].includes (field)) {
                 // console.log(field);
                 const fieldDesc = document.createElement('label');
                 fieldDesc.textContent = field;
@@ -198,19 +198,23 @@ while (main.firstChild) {
             let didValue = iid;
 
             let data = {
-                NCM_ID: didValue,
-                INPUT_USER: getUserValue(),
+                DOCUMENT_ID: didValue,
             };
 
             for (const key in record) {
                 for (const field in record[key]) {
-                    if (['DOCUMENT_ID', 'NCM_DATE', 'ASSIGNED_TO', 'SUBJECT'].includes (field)) {
+                    if (['NAME', 'TYPE', 'SUBJECT', 'STATUS', 'REVISION_LEVEL', 'ISSUE_DATE', 'CTRL_DOC', 'DIST_DOC'].includes (field)) {
                         const fieldname = field;
                         const fieldvalue = document.querySelector('#' + field).value;
                         data = { ...data, [fieldname]: fieldvalue}
                     }
                 }
             }
+            // add the user to the data object
+            data = { ...data, MODIFIED_BY: user};
+            // add the modified date to the data object
+            const modifiedDate = new Date();
+            data = { ...data, MODIFIED_DATE: modifiedDate.toISOString().slice(0, 19).replace('T', ' ')};
 
             if (test) {
                 console.log(data);
